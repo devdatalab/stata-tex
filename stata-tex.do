@@ -190,7 +190,7 @@ insert_into_file using $tmp/estimates.csv, key(est1) value(3.54493) format(%5.2f
 cap prog drop insert_into_file
 prog def insert_into_file
 {
-  syntax using/, Key(string) Value(string) [Format(string) verbose]
+  syntax using/, Key(string) VALue(string) [Format(string) verbose]
 
   /* set default format if not specified */
   if mi("`format'") local format "%6.3f"
