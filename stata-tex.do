@@ -102,19 +102,25 @@ prog def table_from_tpl
   
   
   /* if python path is not set, use current folder */
-  if mi("$PYTHONPATH") {
+  if mi("$STATATEX_PATH") {
 
       /* set path to current folder */
       local path .
   }
   else {
-      local path $PYTHONPATH
+      local path $STATATEX_PATH
+  }
+
+  /* check for deprecated path definition */
+  if mi("$STATATEX_PATH") & !mi("$PYTHONPATH") {
+      display as error "ERROR: global \$STATATEX_PATH not set, but \$PYTHONPATH is. \$PYTHONPATH is deprecated; please define \$STATATEX_PATH instead"
+      error -1
   }
 
   /* check python file existence */
   cap confirm file `path'/table_from_tpl.py
   if _rc {
-      display as error "ERROR: table_from_tpl.py not found. Put in current folder or folder defined by global \$PYTHONPATH"
+      display as error "ERROR: table_from_tpl.py not found. Put in current folder or folder defined by global \$STATATEX_PATH"
       error -1
   }
 
