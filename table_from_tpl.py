@@ -1,6 +1,7 @@
 import os
 import sys
 from optparse import OptionParser
+import pdb
 
 def parse_options():
 
@@ -69,7 +70,11 @@ with open(os.path.expanduser(options.replace_path), "r") as f:
 for line in replacements:
 
     # second parameter "1" allows only one split in case there are commas in the replacement string
-    (token, value) = line.split(",", 1)
+    try:
+        (token, value) = line.split(",", 1)
+    except Exception as e:
+        print(f"*** ERROR: parsing line in replacement file: ***\n----\n{line.strip()}\n----\n\n ({e})")
+        raise
 
     tpl_lines = tpl_lines.replace("$$%s$$" % (token), value.strip())
 
